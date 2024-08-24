@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html class="direction--ltr"lang="ru"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Игровые объекты и компоненты в Unity | free0ne</title>
+<meta name="generator" content="Jekyll v4.3.3" />
+<meta property="og:title" content="Игровые объекты и компоненты в Unity" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Игровой объект (GameObject) Игровой объект (GameObject) в Unity – основная сущность, используемая при построении игровых сцен. Зачастую игровой объект олицетворяет собой какой-то реальный предмет, например персонажа, мяч, или стол. Сам по себе объект не определяет свои свойства и поведение, - в этом смысле его лучше рассматривать как контейнер для набора определяющих его признаков." />
+<meta property="og:description" content="Игровой объект (GameObject) Игровой объект (GameObject) в Unity – основная сущность, используемая при построении игровых сцен. Зачастую игровой объект олицетворяет собой какой-то реальный предмет, например персонажа, мяч, или стол. Сам по себе объект не определяет свои свойства и поведение, - в этом смысле его лучше рассматривать как контейнер для набора определяющих его признаков." />
+<link rel="canonical" href="http://localhost:4000/fundamentals/2024/08/24/gameobjects-and-components-in-unity.html" />
+<meta property="og:url" content="http://localhost:4000/fundamentals/2024/08/24/gameobjects-and-components-in-unity.html" />
+<meta property="og:site_name" content="free0ne" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2024-08-24T15:40:10+03:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Игровые объекты и компоненты в Unity" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2024-08-24T15:40:10+03:00","datePublished":"2024-08-24T15:40:10+03:00","description":"Игровой объект (GameObject) Игровой объект (GameObject) в Unity – основная сущность, используемая при построении игровых сцен. Зачастую игровой объект олицетворяет собой какой-то реальный предмет, например персонажа, мяч, или стол. Сам по себе объект не определяет свои свойства и поведение, - в этом смысле его лучше рассматривать как контейнер для набора определяющих его признаков.","headline":"Игровые объекты и компоненты в Unity","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/fundamentals/2024/08/24/gameobjects-and-components-in-unity.html"},"url":"http://localhost:4000/fundamentals/2024/08/24/gameobjects-and-components-in-unity.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="stylesheet" href="/assets/css/magnific-popup.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="free0ne" /><script src="https://code.jquery.com/jquery-3.2.0.min.js"></script> 
+  <script src="/assets/js/jquery.magnific-popup.js"></script>
+</head>
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">free0ne<b class="command_prompt"></b><b class="blinking_cursor">_</b></a>
+    <span class="social_links">
+        
+        
+        <a class="color-cyan-hover" href="https://t.me/free0ne"><i class="fab fa-telegram-plane"></i></a>
+        
+        
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+  <div class="author-box">
+
+<div class="description">Привет, на связи разработчик freeone! Здесь я периодически разбираю самые популярные вопросы, с которыми сталкиваются новички при работе с Unity.</div>
+
+</div>
+
+
+<div class="post">
+  <h1 class="post-title">Игровые объекты и компоненты в Unity</h1>
+  
+  <div class="post-tags">
+      
+      <a class="tag" href="/tag/tier0/">tier0</a>
+      
+      <a class="tag" href="/tag/gameobject/">gameobject</a>
+      
+      <a class="tag" href="/tag/component/">component</a>
+      
+  </div>
+  
+  <div class="post-date">
+    Published on 24 Aug 2024
+    
+  </div>
+  
+  <h2 id="игровой-объект-gameobject">Игровой объект (GameObject)</h2>
+<p>Игровой объект (<code class="language-plaintext highlighter-rouge">GameObject</code>) в Unity – основная сущность, используемая при построении игровых сцен. Зачастую игровой объект олицетворяет собой какой-то реальный предмет, например персонажа, мяч, или стол. 
+Сам по себе объект не определяет свои свойства и поведение, - в этом смысле его лучше рассматривать как контейнер для набора определяющих его признаков.</p>
+
+<h2 id="компоненты-components">Компоненты (Components)</h2>
+<p>Тем, что определяет свойства и поведение объекта, являются компоненты (<code class="language-plaintext highlighter-rouge">Components</code>).</p>
+
+<h2 id="пример-определения-свойств-для-объекта">Пример определения свойств для объекта</h2>
+<p>Попробуем определить, как «собрать из компонентов» шар для бильярда в Unity. Допущу, что в несложной 3D-игре для имитации поведения реального шара будет достаточно следующих свойств:</p>
+
+<ol>
+  <li><strong>Положение</strong> в пространстве (на столе)</li>
+  <li>Линейные <strong>размеры</strong></li>
+  <li><strong>Форма</strong> (непосредственно, форма шара)</li>
+  <li><strong>Цвет</strong></li>
+  <li><strong>Вес</strong> (чтобы корректно отскакивать от кия в зависимости от приложенной силы, не улетать со стола, расталкивать другие шары с нужной силой, падать в лузы и т.д.)</li>
+  <li>Не слишком очевидное, но крайне важное в рамках игрового движка свойство – <strong>способность сталкиваться с другими объектами</strong> (без этого свойства шар просто провалится сквозь стол, ни оттолкнуться от кия, ни толкнуть другие шары он не сможет)</li>
+</ol>
+
+<p><em>Такие свойства, как номер шара, гладкость (коэффициент трения), запах и другие, оставим без внимания для упрощения модели.</em></p>
+
+<h2 id="реализация-выбранных-свойств-игрового-объекта-через-компоненты-unity">Реализация выбранных свойств игрового объекта через компоненты Unity:</h2>
+
+<p><strong>1. Положение и размеры</strong></p>
+
+<p>За положение (<code class="language-plaintext highlighter-rouge">Position</code>) в пространстве (включает в себя углы поворота по всем осям - <code class="language-plaintext highlighter-rouge">Rotation</code>) и линейные размеры (<code class="language-plaintext highlighter-rouge">Scale</code>) отвечает компонент <code class="language-plaintext highlighter-rouge">Transform</code> (есть у каждого игрового объекта):<br /></p>
+
+<p><img src="/assets/pool_ball_fundamentals/ball_transform.png" alt="Transform component" title="Transform component" /></p>
+
+<p><br /></p>
+
+<p><strong>2. Форма и цвет</strong></p>
+
+<p>За форму объекта и внешний вид объекта отвечают два компонента, работающие в связке – <code class="language-plaintext highlighter-rouge">MeshFilter</code> (хранит ссылку на непосредственную форму) и <code class="language-plaintext highlighter-rouge">MeshRenderer</code> (управляет тем, как эту форму отрисовать, и что отобразить на её внешней поверхности).</p>
+
+<p><code class="language-plaintext highlighter-rouge">Mesh</code> (с англ. - сетка) в нашем случае является результатом загрузки 3D-модели в Unity. Сеткой он называется потому, что хранит информацию не обо всей модели целиком, а лишь о её каркасе (скелете). <code class="language-plaintext highlighter-rouge">MeshRenderer</code> берёт у <code class="language-plaintext highlighter-rouge">MeshFilter</code> этот каркас, и как на каркас палатки или дирижабля «натягивает» на него заданное нами изображение (<code class="language-plaintext highlighter-rouge">Material</code> в терминах Unity).</p>
+
+<p>В случае с нашим шаром компоненты выглядят следующим образом:<br /></p>
+
+<p><img src="/assets/pool_ball_fundamentals/ball_mesh.png" alt="Mesh components" title="Mesh components" /></p>
+
+<p><code class="language-plaintext highlighter-rouge">MeshFilter</code> ссылается на <code class="language-plaintext highlighter-rouge">Mesh</code> (форму) <strong>Sphere</strong>, являющуюся встроенной в движок.</p>
+
+<p><code class="language-plaintext highlighter-rouge">MeshRenderer</code> имеет ссылку на материал <strong>WhiteMat</strong>, определяющий изображение на поверхности шара – в данном случае, ровный однородный цвет.</p>
+
+<p><br /></p>
+
+<p><strong>3. Вес, воздействие гравитации</strong></p>
+
+<p>За вес шара и его поведение как твёрдого тела в целом отвечает компонент <code class="language-plaintext highlighter-rouge">Rigidbody</code>:<br /></p>
+
+<p><img src="/assets/pool_ball_fundamentals/ball_rigidbody.png" alt="Rigidbody component" title="Rigidbody component" /> <br /></p>
+
+<p>Все параметры установлены по умолчанию, не пугайтесь. Что нам сейчас интересно – видим параметры массы шара (поле <code class="language-plaintext highlighter-rouge">Mass</code>) и флаг использования гравитации (<code class="language-plaintext highlighter-rouge">Use Gravity</code>), определяющий, должен ли шар падать под действием силы притяжения.</p>
+
+<p><br /></p>
+
+<p><strong>4. Столкновения</strong></p>
+
+<p>Способность распознавать столкновения определяет <code class="language-plaintext highlighter-rouge">Collider</code> (В нашем случае – <code class="language-plaintext highlighter-rouge">SphereCollider</code>, идеально учитывающий форму нашего шара при столкновении):<br /></p>
+
+<p><img src="/assets/pool_ball_fundamentals/ball_collider.png" alt="Collider component" title="Collider component" /> <br /></p>
+
+<p>Все параметры также установлены по умолчанию.</p>
+
+<h2 id="результат">Результат</h2>
+
+<p>Итоговый набор компонентов: <br /></p>
+
+<p><img src="/assets/pool_ball_fundamentals/ball_overall.png" alt="Ball gameobject" title="Ball gameobject" /> <br /><br /></p>
+
+<p>Используя всего 5 компонентов для моделирования свойств объекта, <em>а также предварительно установив на сцене слегка наклонённый стол в демонстрационных целях</em>, мы получаем игровой объект, вполне способный отражать в игре свой прототип из реального мира: <br /></p>
+
+<p><img src="/assets/pool_ball_fundamentals/ball_falling_gif.gif" alt="Falling ball" title="Falling ball" /><br /><br /></p>
+
+<p>До новых встреч!
+<br /><br /></p>
+<h3 id="полезные-ссылки">Полезные ссылки</h3>
+
+<p><a href="https://docs.unity3d.com/Manual/GameObjects.html" title="Unity docs: GameObjects">Unity docs: GameObjects</a><br />
+<a href="https://docs.unity3d.com/Manual/Components.html" title="Unity docs: Components">Unity docs: Components</a></p>
+
+</div>
+
+
+
+<!--  -->
+<!--  -->
+
+
+
+  
+  <h2>поиск по тегу</h2>
+  <div class="tag-cloud"><a href="/tag/component/" class="set-5">component</a> <a href="/tag/gameobject/" class="set-5">gameobject</a> <a href="/tag/tier0/" class="set-5">tier0</a></div>
+  
+
+
+
+
+<script>
+  let i = 0;
+  const text = '';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+
+  // Image modal
+  var $imgs = [];
+  $('img').each(function(idx) {
+    var obj = {
+      src: $(this).attr('src')
+    }
+    $imgs.push(obj);
+    var elem = $(this);
+    $(this).click(function() {
+      $('.modal').magnificPopup('open', idx);
+    });
+  });
+
+  $('.modal').magnificPopup({
+    items: $imgs,
+    type: 'image',
+    closeOnContentClick: true,
+    mainClass: 'mfp-img-mobile',
+    image: {
+      verticalFit: true
+    }
+    
+  });
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><a href="https://github.com/bitbrain/jekyll-dash">dash</a> theme for Jekyll by <a href="https://github.com/bitbrain">bitbrain</a> made with <i class="fas fa-heart"></i><div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div>
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+if (theme === "light") {
+    document.documentElement.setAttribute('data-theme', 'light');
+} else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+}
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+if (theme === "dark") {
+    activateDarkTheme();
+} else if (theme === "light") {
+    activateLightTheme();
+} else if  (userPrefers === "light") {
+    activateDarkTheme();
+} else {
+    activateDarkTheme();
+}
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>

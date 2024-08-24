@@ -1,17 +1,81 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-08-24T13:29:09+03:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">free0ne</title><subtitle>Привет, на связи разработчик freeone! Здесь я периодически разбираю самые популярные вопросы, с которыми сталкиваются новички при работе с Unity.</subtitle><entry><title type="html">Welcome to Jekyll!</title><link href="http://localhost:4000/jekyll/update/2024/08/22/welcome-to-jekyll.html" rel="alternate" type="text/html" title="Welcome to Jekyll!" /><published>2024-08-22T23:53:10+03:00</published><updated>2024-08-22T23:53:10+03:00</updated><id>http://localhost:4000/jekyll/update/2024/08/22/welcome-to-jekyll</id><content type="html" xml:base="http://localhost:4000/jekyll/update/2024/08/22/welcome-to-jekyll.html"><![CDATA[<p>You’ll find this post in your <code class="language-plaintext highlighter-rouge">_posts</code> directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run <code class="language-plaintext highlighter-rouge">jekyll serve</code>, which launches a web server and auto-regenerates your site when a file is updated.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-08-24T18:33:05+03:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">free0ne</title><subtitle>Привет, на связи разработчик freeone! Здесь я периодически разбираю самые популярные вопросы, с которыми сталкиваются новички при работе с Unity.</subtitle><entry><title type="html">Игровые объекты и компоненты в Unity</title><link href="http://localhost:4000/fundamentals/2024/08/24/gameobjects-and-components-in-unity.html" rel="alternate" type="text/html" title="Игровые объекты и компоненты в Unity" /><published>2024-08-24T15:40:10+03:00</published><updated>2024-08-24T15:40:10+03:00</updated><id>http://localhost:4000/fundamentals/2024/08/24/gameobjects-and-components-in-unity</id><content type="html" xml:base="http://localhost:4000/fundamentals/2024/08/24/gameobjects-and-components-in-unity.html"><![CDATA[<h2 id="игровой-объект-gameobject">Игровой объект (GameObject)</h2>
+<p>Игровой объект (<code class="language-plaintext highlighter-rouge">GameObject</code>) в Unity – основная сущность, используемая при построении игровых сцен. Зачастую игровой объект олицетворяет собой какой-то реальный предмет, например персонажа, мяч, или стол. 
+Сам по себе объект не определяет свои свойства и поведение, - в этом смысле его лучше рассматривать как контейнер для набора определяющих его признаков.</p>
 
-<p>Jekyll requires blog post files to be named according to the following format:</p>
+<h2 id="компоненты-components">Компоненты (Components)</h2>
+<p>Тем, что определяет свойства и поведение объекта, являются компоненты (<code class="language-plaintext highlighter-rouge">Components</code>).</p>
 
-<p><code class="language-plaintext highlighter-rouge">YEAR-MONTH-DAY-title.MARKUP</code></p>
+<h2 id="пример-определения-свойств-для-объекта">Пример определения свойств для объекта</h2>
+<p>Попробуем определить, как «собрать из компонентов» шар для бильярда в Unity. Допущу, что в несложной 3D-игре для имитации поведения реального шара будет достаточно следующих свойств:</p>
 
-<p>Where <code class="language-plaintext highlighter-rouge">YEAR</code> is a four-digit number, <code class="language-plaintext highlighter-rouge">MONTH</code> and <code class="language-plaintext highlighter-rouge">DAY</code> are both two-digit numbers, and <code class="language-plaintext highlighter-rouge">MARKUP</code> is the file extension representing the format used in the file. After that, include the necessary front matter. Take a look at the source for this post to get an idea about how it works.</p>
+<ol>
+  <li><strong>Положение</strong> в пространстве (на столе)</li>
+  <li>Линейные <strong>размеры</strong></li>
+  <li><strong>Форма</strong> (непосредственно, форма шара)</li>
+  <li><strong>Цвет</strong></li>
+  <li><strong>Вес</strong> (чтобы корректно отскакивать от кия в зависимости от приложенной силы, не улетать со стола, расталкивать другие шары с нужной силой, падать в лузы и т.д.)</li>
+  <li>Не слишком очевидное, но крайне важное в рамках игрового движка свойство – <strong>способность сталкиваться с другими объектами</strong> (без этого свойства шар просто провалится сквозь стол, ни оттолкнуться от кия, ни толкнуть другие шары он не сможет)</li>
+</ol>
 
-<p>Jekyll also offers powerful support for code snippets:</p>
+<p><em>Такие свойства, как номер шара, гладкость (коэффициент трения), запах и другие, оставим без внимания для упрощения модели.</em></p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">print_hi</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
-  <span class="nb">puts</span> <span class="s2">"Hi, </span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">"</span>
-<span class="k">end</span>
-<span class="n">print_hi</span><span class="p">(</span><span class="s1">'Tom'</span><span class="p">)</span>
-<span class="c1">#=&gt; prints 'Hi, Tom' to STDOUT.</span></code></pre></figure>
+<h2 id="реализация-выбранных-свойств-игрового-объекта-через-компоненты-unity">Реализация выбранных свойств игрового объекта через компоненты Unity:</h2>
 
-<p>Check out the <a href="https://jekyllrb.com/docs/home">Jekyll docs</a> for more info on how to get the most out of Jekyll. File all bugs/feature requests at <a href="https://github.com/jekyll/jekyll">Jekyll’s GitHub repo</a>. If you have questions, you can ask them on <a href="https://talk.jekyllrb.com/">Jekyll Talk</a>.</p>]]></content><author><name></name></author><category term="jekyll" /><category term="update" /><category term="тег1" /><summary type="html"><![CDATA[You’ll find this post in your _posts directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run jekyll serve, which launches a web server and auto-regenerates your site when a file is updated.]]></summary></entry></feed>
+<p><strong>1. Положение и размеры</strong></p>
+
+<p>За положение (<code class="language-plaintext highlighter-rouge">Position</code>) в пространстве (включает в себя углы поворота по всем осям - <code class="language-plaintext highlighter-rouge">Rotation</code>) и линейные размеры (<code class="language-plaintext highlighter-rouge">Scale</code>) отвечает компонент <code class="language-plaintext highlighter-rouge">Transform</code> (есть у каждого игрового объекта):<br /></p>
+
+<p><img src="/assets/pool_ball_fundamentals/ball_transform.png" alt="Transform component" title="Transform component" /></p>
+
+<p><br /></p>
+
+<p><strong>2. Форма и цвет</strong></p>
+
+<p>За форму объекта и внешний вид объекта отвечают два компонента, работающие в связке – <code class="language-plaintext highlighter-rouge">MeshFilter</code> (хранит ссылку на непосредственную форму) и <code class="language-plaintext highlighter-rouge">MeshRenderer</code> (управляет тем, как эту форму отрисовать, и что отобразить на её внешней поверхности).</p>
+
+<p><code class="language-plaintext highlighter-rouge">Mesh</code> (с англ. - сетка) в нашем случае является результатом загрузки 3D-модели в Unity. Сеткой он называется потому, что хранит информацию не обо всей модели целиком, а лишь о её каркасе (скелете). <code class="language-plaintext highlighter-rouge">MeshRenderer</code> берёт у <code class="language-plaintext highlighter-rouge">MeshFilter</code> этот каркас, и как на каркас палатки или дирижабля «натягивает» на него заданное нами изображение (<code class="language-plaintext highlighter-rouge">Material</code> в терминах Unity).</p>
+
+<p>В случае с нашим шаром компоненты выглядят следующим образом:<br /></p>
+
+<p><img src="/assets/pool_ball_fundamentals/ball_mesh.png" alt="Mesh components" title="Mesh components" /></p>
+
+<p><code class="language-plaintext highlighter-rouge">MeshFilter</code> ссылается на <code class="language-plaintext highlighter-rouge">Mesh</code> (форму) <strong>Sphere</strong>, являющуюся встроенной в движок.</p>
+
+<p><code class="language-plaintext highlighter-rouge">MeshRenderer</code> имеет ссылку на материал <strong>WhiteMat</strong>, определяющий изображение на поверхности шара – в данном случае, ровный однородный цвет.</p>
+
+<p><br /></p>
+
+<p><strong>3. Вес, воздействие гравитации</strong></p>
+
+<p>За вес шара и его поведение как твёрдого тела в целом отвечает компонент <code class="language-plaintext highlighter-rouge">Rigidbody</code>:<br /></p>
+
+<p><img src="/assets/pool_ball_fundamentals/ball_rigidbody.png" alt="Rigidbody component" title="Rigidbody component" /> <br /></p>
+
+<p>Все параметры установлены по умолчанию, не пугайтесь. Что нам сейчас интересно – видим параметры массы шара (поле <code class="language-plaintext highlighter-rouge">Mass</code>) и флаг использования гравитации (<code class="language-plaintext highlighter-rouge">Use Gravity</code>), определяющий, должен ли шар падать под действием силы притяжения.</p>
+
+<p><br /></p>
+
+<p><strong>4. Столкновения</strong></p>
+
+<p>Способность распознавать столкновения определяет <code class="language-plaintext highlighter-rouge">Collider</code> (В нашем случае – <code class="language-plaintext highlighter-rouge">SphereCollider</code>, идеально учитывающий форму нашего шара при столкновении):<br /></p>
+
+<p><img src="/assets/pool_ball_fundamentals/ball_collider.png" alt="Collider component" title="Collider component" /> <br /></p>
+
+<p>Все параметры также установлены по умолчанию.</p>
+
+<h2 id="результат">Результат</h2>
+
+<p>Итоговый набор компонентов: <br /></p>
+
+<p><img src="/assets/pool_ball_fundamentals/ball_overall.png" alt="Ball gameobject" title="Ball gameobject" /> <br /><br /></p>
+
+<p>Используя всего 5 компонентов для моделирования свойств объекта, <em>а также предварительно установив на сцене слегка наклонённый стол в демонстрационных целях</em>, мы получаем игровой объект, вполне способный отражать в игре свой прототип из реального мира: <br /></p>
+
+<p><img src="/assets/pool_ball_fundamentals/ball_falling_gif.gif" alt="Falling ball" title="Falling ball" /><br /><br /></p>
+
+<p>До новых встреч!
+<br /><br /></p>
+<h3 id="полезные-ссылки">Полезные ссылки</h3>
+
+<p><a href="https://docs.unity3d.com/Manual/GameObjects.html" title="Unity docs: GameObjects">Unity docs: GameObjects</a><br />
+<a href="https://docs.unity3d.com/Manual/Components.html" title="Unity docs: Components">Unity docs: Components</a></p>]]></content><author><name></name></author><category term="fundamentals" /><category term="tier0" /><category term="gameobject" /><category term="component" /><summary type="html"><![CDATA[Игровой объект (GameObject) Игровой объект (GameObject) в Unity – основная сущность, используемая при построении игровых сцен. Зачастую игровой объект олицетворяет собой какой-то реальный предмет, например персонажа, мяч, или стол. Сам по себе объект не определяет свои свойства и поведение, - в этом смысле его лучше рассматривать как контейнер для набора определяющих его признаков.]]></summary></entry></feed>
