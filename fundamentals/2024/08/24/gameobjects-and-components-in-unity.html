@@ -7,8 +7,8 @@
 <meta name="generator" content="Jekyll v4.3.3" />
 <meta property="og:title" content="Игровые объекты и компоненты в Unity" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Игровой объект (GameObject) Игровой объект (GameObject) в Unity – основная сущность, используемая при построении игровых сцен. Зачастую игровой объект олицетворяет собой какой-то реальный предмет, например персонажа, мяч, или стол. Сам по себе объект не определяет свои свойства и поведение, - в этом смысле его лучше рассматривать как контейнер для набора определяющих его признаков." />
-<meta property="og:description" content="Игровой объект (GameObject) Игровой объект (GameObject) в Unity – основная сущность, используемая при построении игровых сцен. Зачастую игровой объект олицетворяет собой какой-то реальный предмет, например персонажа, мяч, или стол. Сам по себе объект не определяет свои свойства и поведение, - в этом смысле его лучше рассматривать как контейнер для набора определяющих его признаков." />
+<meta name="description" content="Рассмотрим базовые кирпичики, из которых строится любая игра на Unity - GameObject и Component" />
+<meta property="og:description" content="Рассмотрим базовые кирпичики, из которых строится любая игра на Unity - GameObject и Component" />
 <link rel="canonical" href="http://localhost:4000/fundamentals/2024/08/24/gameobjects-and-components-in-unity.html" />
 <meta property="og:url" content="http://localhost:4000/fundamentals/2024/08/24/gameobjects-and-components-in-unity.html" />
 <meta property="og:site_name" content="free0ne" />
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Игровые объекты и компоненты в Unity" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2024-08-24T15:40:10+03:00","datePublished":"2024-08-24T15:40:10+03:00","description":"Игровой объект (GameObject) Игровой объект (GameObject) в Unity – основная сущность, используемая при построении игровых сцен. Зачастую игровой объект олицетворяет собой какой-то реальный предмет, например персонажа, мяч, или стол. Сам по себе объект не определяет свои свойства и поведение, - в этом смысле его лучше рассматривать как контейнер для набора определяющих его признаков.","headline":"Игровые объекты и компоненты в Unity","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/fundamentals/2024/08/24/gameobjects-and-components-in-unity.html"},"url":"http://localhost:4000/fundamentals/2024/08/24/gameobjects-and-components-in-unity.html"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2024-08-24T15:40:10+03:00","datePublished":"2024-08-24T15:40:10+03:00","description":"Рассмотрим базовые кирпичики, из которых строится любая игра на Unity - GameObject и Component","headline":"Игровые объекты и компоненты в Unity","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/fundamentals/2024/08/24/gameobjects-and-components-in-unity.html"},"url":"http://localhost:4000/fundamentals/2024/08/24/gameobjects-and-components-in-unity.html"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/css/style.css">
   <link rel="icon" type="image/png" href="/assets/favicon.png" />
@@ -63,6 +63,11 @@
     Published on 24 Aug 2024
     
   </div>
+  
+  <noscript>
+    <div class="post-description">Рассмотрим базовые кирпичики, из которых строится любая игра на Unity - GameObject и Component</div>
+  </noscript>
+  <div id="animated-post-description" class="post-description" style="display: none;"></div>
   
   <h2 id="игровой-объект-gameobject">Игровой объект (GameObject)</h2>
 <p>Игровой объект (<code class="language-plaintext highlighter-rouge">GameObject</code>) в Unity – основная сущность, используемая при построении игровых сцен. Зачастую игровой объект олицетворяет собой какой-то реальный предмет, например персонажа, мяч, или стол. 
@@ -165,7 +170,7 @@
 
 <script>
   let i = 0;
-  const text = '';
+  const text = 'Рассмотрим базовые кирпичики, из которых строится любая игра на Unity - GameObject и Component';
   const speed = parseInt('50');
   
   function typeWriter() {
