@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html class="direction--ltr"lang="ru"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Как получить ссылку на компонент игрового объекта в Unity | free0ne</title>
+<meta name="generator" content="Jekyll v4.3.3" />
+<meta property="og:title" content="Как получить ссылку на компонент игрового объекта в Unity" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Разбираю запрос «как получить компонент в Unity», - фактически, в коде мы работаем с компонентами не напрямую, а через ссылки на них" />
+<meta property="og:description" content="Разбираю запрос «как получить компонент в Unity», - фактически, в коде мы работаем с компонентами не напрямую, а через ссылки на них" />
+<link rel="canonical" href="http://localhost:4000/fundamentals/2024/08/25/how-to-get-component-reference-in-unity.html" />
+<meta property="og:url" content="http://localhost:4000/fundamentals/2024/08/25/how-to-get-component-reference-in-unity.html" />
+<meta property="og:site_name" content="free0ne" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2024-08-25T19:20:10+03:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Как получить ссылку на компонент игрового объекта в Unity" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2024-08-25T19:20:10+03:00","datePublished":"2024-08-25T19:20:10+03:00","description":"Разбираю запрос «как получить компонент в Unity», - фактически, в коде мы работаем с компонентами не напрямую, а через ссылки на них","headline":"Как получить ссылку на компонент игрового объекта в Unity","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/fundamentals/2024/08/25/how-to-get-component-reference-in-unity.html"},"url":"http://localhost:4000/fundamentals/2024/08/25/how-to-get-component-reference-in-unity.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="stylesheet" href="/assets/css/magnific-popup.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="free0ne" /><script src="https://code.jquery.com/jquery-3.2.0.min.js"></script> 
+  <script src="/assets/js/jquery.magnific-popup.js"></script>
+</head>
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">free0ne<b class="command_prompt"></b><b class="blinking_cursor">_</b></a>
+    <span class="social_links">
+        
+        
+        <a class="color-cyan-hover" href="https://t.me/free0ne"><i class="fab fa-telegram-plane"></i></a>
+        
+        
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+  <div class="author-box">
+
+<div class="description">Привет, на связи разработчик freeone! Здесь я периодически разбираю самые популярные вопросы, с которыми сталкиваются новички при работе с Unity.</div>
+
+</div>
+
+
+<div class="post">
+  <h1 class="post-title">Как получить ссылку на компонент игрового объекта в Unity</h1>
+  
+  <div class="post-tags">
+      
+      <a class="tag" href="/tag/tier1/">tier1</a>
+      
+      <a class="tag" href="/tag/gameobject/">gameobject</a>
+      
+      <a class="tag" href="/tag/component/">component</a>
+      
+      <a class="tag" href="/tag/custom_component/">custom_component</a>
+      
+  </div>
+  
+  <div class="post-date">
+    Published on 25 Aug 2024
+    
+  </div>
+  
+  <noscript>
+    <div class="post-description">Разбираю запрос «как получить компонент в Unity», - фактически, в коде мы работаем с компонентами не напрямую, а через ссылки на них </div>
+  </noscript>
+  <div id="animated-post-description" class="post-description" style="display: none;"></div>
+  
+  <h2 id="задача-для-примера">Задача для примера:</h2>
+<p>Вывести в консоль координаты некоторого игрового объекта.</p>
+
+<p>Координаты объекта определяет компонент <code class="language-plaintext highlighter-rouge">Transform</code>, - значит с ним и будем работать.</p>
+
+<p>Для решения задачи создадим свой компонент, содержащий метод, принимающий целевой <code class="language-plaintext highlighter-rouge">Transform</code> в качестве параметра, и печатающий его мировые координаты в консоль. Компонент назовём <code class="language-plaintext highlighter-rouge">PositionPrinter</code>.</p>
+
+<p>Для демонстрации возьму сцену из <a href="../24/gameobjects-and-components-in-unity.html">поста про игровые объекты и компоненты</a></p>
+
+<p>Создадим новый скрипт, добавим код:</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">PositionPrinter</span> <span class="p">:</span> <span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="k">void</span> <span class="nf">Start</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="c1">// будем вызывать PrintPosition() тут </span>
+    <span class="p">}</span>
+
+    <span class="k">private</span> <span class="k">void</span> <span class="nf">PrintPosition</span><span class="p">(</span><span class="n">Transform</span> <span class="n">targetTransform</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">Debug</span><span class="p">.</span><span class="nf">Log</span><span class="p">(</span><span class="s">$"Координата X:</span><span class="p">{</span><span class="n">targetTransform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="p">}</span><span class="s">\n"</span> <span class="p">+</span>
+                  <span class="s">$"Координата Y:</span><span class="p">{</span><span class="n">targetTransform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span><span class="p">}</span><span class="s">\n"</span> <span class="p">+</span>
+                  <span class="s">$"Координата Z:</span><span class="p">{</span><span class="n">targetTransform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">z</span><span class="p">}</span><span class="s">\n"</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p><br /></p>
+
+<h3 id="вопрос-следующий--как-наш-positionprinter-получит-transform-для-передачи-своему-методу-на-обработку">Вопрос следующий – как наш <code class="language-plaintext highlighter-rouge">PositionPrinter</code> получит <code class="language-plaintext highlighter-rouge">Transform</code> для передачи своему методу на обработку?</h3>
+
+<h3 id="вариант-1-через-сериализуемое-поле-и-gui-редактора-unity">Вариант 1: <a href="./getting-reference-via-serializefield-in-unity.html">Через сериализуемое поле и GUI редактора Unity</a></h3>
+
+<h3 id="вариант-2-через-методы-getcomponentt-и-trygetcomponentt">Вариант 2: Через методы GetComponent&lt;T&gt;() и TryGetComponent&lt;T&gt;()</h3>
+<!-- ### Вариант 2: [Через методы GetComponent\<T\>() и TryGetComponent\<T\>()](../24/gameobjects-and-components-in-unity.html) -->
+
+<h3 id="вариант-3-при-создании-объекта">Вариант 3: При создании объекта</h3>
+<!-- ### Вариант 3: [\[Бонус\]: При создании объекта](../24/gameobjects-and-components-in-unity.html) -->
+<p><br /></p>
+
+<p>Реализовав любой из вариантов, ваш скрипт может делать с ссылкой на компонент что угодно – вызывать через неё его методы, запомнить для последующего обращения или передать другим компонентам для последующей обработки.</p>
+
+<p>Другие варианты получения ссылки на компонент объекта будут лишь более изощрёнными комбинациями примеров, приведённых выше.</p>
+
+<p><br /></p>
+
+<p>До новых встреч!</p>
+
+</div>
+
+
+
+<!--  -->
+<!--  -->
+<!-- <div class="related"> -->
+  <!-- <h2>related posts</h2> -->
+  <!-- <ul class="related-posts"> -->
+    <!--  -->
+      <!-- <li> -->
+        <!-- <h3> -->
+          <!-- <a href="/fundamentals/2024/08/25/getting-reference-via-serializefield-in-unity.html"> -->
+            <!-- Как получить ссылку на компонент через сериализуемое поле в Unity -->
+          <!-- </a> -->
+        <!-- </h3> -->
+      <!-- </li> -->
+    <!--  -->
+      <!-- <li> -->
+        <!-- <h3> -->
+          <!-- <a href="/fundamentals/2024/08/24/gameobjects-and-components-in-unity.html"> -->
+            <!-- Игровые объекты и компоненты в Unity -->
+          <!-- </a> -->
+        <!-- </h3> -->
+      <!-- </li> -->
+    <!--  -->
+  <!-- </ul> -->
+<!-- </div> -->
+<!--  -->
+
+
+
+  
+  <h2>поиск по тегу</h2>
+  <div class="tag-cloud"><a href="/tag/attributes/" class="set-1">attributes</a> <a href="/tag/component/" class="set-5">component</a> <a href="/tag/custom_component/" class="set-1">custom_component</a> <a href="/tag/gameobject/" class="set-5">gameobject</a> <a href="/tag/tier0/" class="set-1">tier0</a> <a href="/tag/tier1/" class="set-3">tier1</a></div>
+  
+
+
+
+
+<script>
+  let i = 0;
+  const text = 'Разбираю запрос «как получить компонент в Unity», - фактически, в коде мы работаем с компонентами не напрямую, а через ссылки на них ';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+
+  // Image modal
+  var $imgs = [];
+  $('img').each(function(idx) {
+    var obj = {
+      src: $(this).attr('src')
+    }
+    $imgs.push(obj);
+    var elem = $(this);
+    $(this).click(function() {
+      $('.modal').magnificPopup('open', idx);
+    });
+  });
+
+  $('.modal').magnificPopup({
+    items: $imgs,
+    type: 'image',
+    closeOnContentClick: true,
+    mainClass: 'mfp-img-mobile',
+    image: {
+      verticalFit: true
+    }
+    
+  });
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><a href="https://github.com/bitbrain/jekyll-dash">dash</a> theme for Jekyll by <a href="https://github.com/bitbrain">bitbrain</a> made with <i class="fas fa-heart"></i><div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div>
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+if (theme === "light") {
+    document.documentElement.setAttribute('data-theme', 'light');
+} else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+}
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+if (theme === "dark") {
+    activateDarkTheme();
+} else if (theme === "light") {
+    activateLightTheme();
+} else if  (userPrefers === "light") {
+    activateDarkTheme();
+} else {
+    activateDarkTheme();
+}
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>

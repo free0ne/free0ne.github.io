@@ -1,4 +1,126 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-08-25T18:15:14+03:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">free0ne</title><subtitle>Привет, на связи разработчик freeone! Здесь я периодически разбираю самые популярные вопросы, с которыми сталкиваются новички при работе с Unity.</subtitle><entry><title type="html">Игровые объекты и компоненты в Unity</title><link href="http://localhost:4000/fundamentals/2024/08/24/gameobjects-and-components-in-unity.html" rel="alternate" type="text/html" title="Игровые объекты и компоненты в Unity" /><published>2024-08-24T15:40:10+03:00</published><updated>2024-08-24T15:40:10+03:00</updated><id>http://localhost:4000/fundamentals/2024/08/24/gameobjects-and-components-in-unity</id><content type="html" xml:base="http://localhost:4000/fundamentals/2024/08/24/gameobjects-and-components-in-unity.html"><![CDATA[<h2 id="игровой-объект-gameobject">Игровой объект (GameObject)</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-08-26T00:10:05+03:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">free0ne</title><subtitle>Привет, на связи разработчик freeone! Здесь я периодически разбираю самые популярные вопросы, с которыми сталкиваются новички при работе с Unity.</subtitle><entry><title type="html">Как получить ссылку на компонент через сериализуемое поле в Unity</title><link href="http://localhost:4000/fundamentals/2024/08/25/getting-reference-via-serializefield-in-unity.html" rel="alternate" type="text/html" title="Как получить ссылку на компонент через сериализуемое поле в Unity" /><published>2024-08-25T20:20:10+03:00</published><updated>2024-08-25T20:20:10+03:00</updated><id>http://localhost:4000/fundamentals/2024/08/25/getting-reference-via-serializefield-in-unity</id><content type="html" xml:base="http://localhost:4000/fundamentals/2024/08/25/getting-reference-via-serializefield-in-unity.html"><![CDATA[<h3 id="головной-пост-как-получить-ссылку-на-компонент-игрового-объекта-в-unity">Головной пост: <a href="./how-to-get-component-reference-in-unity.html">Как получить ссылку на компонент игрового объекта в Unity</a></h3>
+
+<p><br /></p>
+
+<p>В коде создаваемого нами компонента мы можем добавить к полю атрибут <code class="language-plaintext highlighter-rouge">[SerializeField]</code>, который <em>(даёт Unity команду сериализовать данное поле)</em> позволит работать с указанным полем из редактора.</p>
+
+<p>Если типом данного поля является другой компонент, тогда мы можем передать в поле ссылку на него, перетащив мышкой искомый компонент, или игровой объект, содержащий этот компонент.</p>
+
+<p>Для реализации данного способа получения ссылки на компонент, доработаем код класса <code class="language-plaintext highlighter-rouge">PositionPrinter</code> <a href="./how-to-get-component-reference-in-unity.html">(из головного поста)</a>, добавив в него новое поле:</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">PositionPrinter</span> <span class="p">:</span> <span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">SerializeField</span><span class="p">]</span> <span class="k">private</span> <span class="n">Transform</span> <span class="n">target</span><span class="p">;</span> <span class="c1">// добавили поле</span>
+    
+    <span class="k">private</span> <span class="k">void</span> <span class="nf">Start</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nf">PrintPosition</span><span class="p">(</span><span class="n">target</span><span class="p">);</span> <span class="c1">// добавили вызов метода</span>
+    <span class="p">}</span>
+
+    <span class="k">private</span> <span class="k">void</span> <span class="nf">PrintPosition</span><span class="p">(</span><span class="n">Transform</span> <span class="n">targetTransform</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">Debug</span><span class="p">.</span><span class="nf">Log</span><span class="p">(</span><span class="s">$"Координата X:</span><span class="p">{</span><span class="n">targetTransform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="p">}</span><span class="s">, "</span> <span class="p">+</span>
+                  <span class="s">$"Координата Y:</span><span class="p">{</span><span class="n">targetTransform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span><span class="p">}</span><span class="s">, "</span> <span class="p">+</span>
+                  <span class="s">$"Координата Z:</span><span class="p">{</span><span class="n">targetTransform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">z</span><span class="p">}</span><span class="s">"</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p><br /></p>
+
+<p>Добавим наш <code class="language-plaintext highlighter-rouge">PositionPrinter</code> на любой игровой объект (в данном случае, на тот же объект, чьи координаты мы будем отображать, но это не является обязательным условием). Затем в инспекторе игрового объекта перетащим мышкой интересующий нас компонент <code class="language-plaintext highlighter-rouge">Transform</code> в поле <code class="language-plaintext highlighter-rouge">target</code>.</p>
+
+<p><img src="/assets/getting_component_reference/component_to_serialized_field.gif" alt="Passing component to the field" title="Passing component to the field" /><br /><br /></p>
+
+<p>Готово, мы «связали» наш <code class="language-plaintext highlighter-rouge">PositionPrinter</code> и искомый <code class="language-plaintext highlighter-rouge">Transform</code>. Теперь ссылка на <code class="language-plaintext highlighter-rouge">Transform</code><em>(в примере - <code class="language-plaintext highlighter-rouge">Transform</code> игрового объекта под названием Ball)</em> хранится в поле <code class="language-plaintext highlighter-rouge">target</code> нашего скрипта.</p>
+
+<p>Запускаем <code class="language-plaintext highlighter-rouge">Play Mode</code>, смотрим в консоль:</p>
+
+<p><img src="/assets/getting_component_reference/position_printer_output.png" alt="PositionPrinter output" title="PositionPrinter output" />
+<br /><br /></p>
+
+<p>Поздравляю, это определённо успех!</p>
+
+<p><br /></p>
+
+<p>В данном примере <code class="language-plaintext highlighter-rouge">PositionPrinter</code> и искомый <code class="language-plaintext highlighter-rouge">Transform</code> находятся внутри одного <code class="language-plaintext highlighter-rouge">GameObject</code>’a, однако всё сработает точно так же, если мы разместим их на разных игровых объектах.</p>
+
+<p><br /></p>
+
+<h3 id="альтернативный-вариант-передачи-компонента-через-публичное-поле-bad-practice">Альтернативный вариант передачи компонента через публичное поле <font color="red">[bad practice]</font></h3>
+
+<p>Публичные поля без каких-либо атрибутов сериализуются Unity так же, как и приватные/защищенные с атрибутом <code class="language-plaintext highlighter-rouge">[SerializeField]</code>.</p>
+
+<p>Данная практика является <em>крайне нежелательной</em>, буквально порочной!</p>
+
+<p>Публичные поля стоит избегать вообще, заменяя их на свойства и публичные методы доступа.</p>
+
+<p>В данном случае, указав для поля модификатор доступа <code class="language-plaintext highlighter-rouge">public</code>, мы нарушим инкапсуляцию класса <code class="language-plaintext highlighter-rouge">PositionPrinter</code> (и дадим всем скриптам, имеющим ссылку на PositionPrinter полный доступ к выбранному <code class="language-plaintext highlighter-rouge">Transform</code>’у) лишь потому, что хотим передать ссылку на другой компонент из редактора – это, как минимум, моветон.</p>
+
+<p>В целом, если замечаете, что работаете в редакторе с публичными полями, или, ещё интереснее – пишете что-нибудь вроде</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="p">[</span><span class="n">SerializeField</span><span class="p">]</span> <span class="k">public</span> <span class="n">MyComponent</span> <span class="n">ComponentInstance</span><span class="p">;</span></code></pre></figure>
+
+<p>- проанализируйте, действительно вы решаете именно ту задачу, которую планировали, и не было ли допущено ошибок.</p>
+
+<p><br /></p>
+
+<p><a href="./how-to-get-component-reference-in-unity.html">Вернуться к головному посту</a></p>
+
+<p><br /></p>
+
+<h3 id="полезные-ссылки">Полезные ссылки</h3>
+
+<p><a href="https://docs.unity3d.com/ScriptReference/SerializeField.html" title="Unity docs: SerializeField">Unity docs: SerializeField</a><br />
+<a href="https://docs.unity3d.com/Manual/Attributes.html" title="Unity docs: Attributes">Unity docs: Attributes</a></p>]]></content><author><name></name></author><category term="fundamentals" /><category term="tier1" /><category term="gameobject" /><category term="component" /><category term="attributes" /><summary type="html"><![CDATA[Головной пост: Как получить ссылку на компонент игрового объекта в Unity]]></summary></entry><entry><title type="html">Как получить ссылку на компонент игрового объекта в Unity</title><link href="http://localhost:4000/fundamentals/2024/08/25/how-to-get-component-reference-in-unity.html" rel="alternate" type="text/html" title="Как получить ссылку на компонент игрового объекта в Unity" /><published>2024-08-25T19:20:10+03:00</published><updated>2024-08-25T19:20:10+03:00</updated><id>http://localhost:4000/fundamentals/2024/08/25/how-to-get-component-reference-in-unity</id><content type="html" xml:base="http://localhost:4000/fundamentals/2024/08/25/how-to-get-component-reference-in-unity.html"><![CDATA[<h2 id="задача-для-примера">Задача для примера:</h2>
+<p>Вывести в консоль координаты некоторого игрового объекта.</p>
+
+<p>Координаты объекта определяет компонент <code class="language-plaintext highlighter-rouge">Transform</code>, - значит с ним и будем работать.</p>
+
+<p>Для решения задачи создадим свой компонент, содержащий метод, принимающий целевой <code class="language-plaintext highlighter-rouge">Transform</code> в качестве параметра, и печатающий его мировые координаты в консоль. Компонент назовём <code class="language-plaintext highlighter-rouge">PositionPrinter</code>.</p>
+
+<p>Для демонстрации возьму сцену из <a href="../24/gameobjects-and-components-in-unity.html">поста про игровые объекты и компоненты</a></p>
+
+<p>Создадим новый скрипт, добавим код:</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">PositionPrinter</span> <span class="p">:</span> <span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="k">void</span> <span class="nf">Start</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="c1">// будем вызывать PrintPosition() тут </span>
+    <span class="p">}</span>
+
+    <span class="k">private</span> <span class="k">void</span> <span class="nf">PrintPosition</span><span class="p">(</span><span class="n">Transform</span> <span class="n">targetTransform</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">Debug</span><span class="p">.</span><span class="nf">Log</span><span class="p">(</span><span class="s">$"Координата X:</span><span class="p">{</span><span class="n">targetTransform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="p">}</span><span class="s">\n"</span> <span class="p">+</span>
+                  <span class="s">$"Координата Y:</span><span class="p">{</span><span class="n">targetTransform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span><span class="p">}</span><span class="s">\n"</span> <span class="p">+</span>
+                  <span class="s">$"Координата Z:</span><span class="p">{</span><span class="n">targetTransform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">z</span><span class="p">}</span><span class="s">\n"</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p><br /></p>
+
+<h3 id="вопрос-следующий--как-наш-positionprinter-получит-transform-для-передачи-своему-методу-на-обработку">Вопрос следующий – как наш <code class="language-plaintext highlighter-rouge">PositionPrinter</code> получит <code class="language-plaintext highlighter-rouge">Transform</code> для передачи своему методу на обработку?</h3>
+
+<h3 id="вариант-1-через-сериализуемое-поле-и-gui-редактора-unity">Вариант 1: <a href="./getting-reference-via-serializefield-in-unity.html">Через сериализуемое поле и GUI редактора Unity</a></h3>
+
+<h3 id="вариант-2-через-методы-getcomponentt-и-trygetcomponentt">Вариант 2: Через методы GetComponent&lt;T&gt;() и TryGetComponent&lt;T&gt;()</h3>
+<!-- ### Вариант 2: [Через методы GetComponent\<T\>() и TryGetComponent\<T\>()](../24/gameobjects-and-components-in-unity.html) -->
+
+<h3 id="вариант-3-при-создании-объекта">Вариант 3: При создании объекта</h3>
+<!-- ### Вариант 3: [\[Бонус\]: При создании объекта](../24/gameobjects-and-components-in-unity.html) -->
+<p><br /></p>
+
+<p>Реализовав любой из вариантов, ваш скрипт может делать с ссылкой на компонент что угодно – вызывать через неё его методы, запомнить для последующего обращения или передать другим компонентам для последующей обработки.</p>
+
+<p>Другие варианты получения ссылки на компонент объекта будут лишь более изощрёнными комбинациями примеров, приведённых выше.</p>
+
+<p><br /></p>
+
+<p>До новых встреч!</p>]]></content><author><name></name></author><category term="fundamentals" /><category term="tier1" /><category term="gameobject" /><category term="component" /><category term="custom_component" /><summary type="html"><![CDATA[Разбираю запрос «как получить компонент в Unity», - фактически, в коде мы работаем с компонентами не напрямую, а через ссылки на них]]></summary></entry><entry><title type="html">Игровые объекты и компоненты в Unity</title><link href="http://localhost:4000/fundamentals/2024/08/24/gameobjects-and-components-in-unity.html" rel="alternate" type="text/html" title="Игровые объекты и компоненты в Unity" /><published>2024-08-24T15:40:10+03:00</published><updated>2024-08-24T15:40:10+03:00</updated><id>http://localhost:4000/fundamentals/2024/08/24/gameobjects-and-components-in-unity</id><content type="html" xml:base="http://localhost:4000/fundamentals/2024/08/24/gameobjects-and-components-in-unity.html"><![CDATA[<h2 id="игровой-объект-gameobject">Игровой объект (GameObject)</h2>
 <p>Игровой объект (<code class="language-plaintext highlighter-rouge">GameObject</code>) в Unity – основная сущность, используемая при построении игровых сцен. Зачастую игровой объект олицетворяет собой какой-то реальный предмет, например персонажа, мяч, или стол. 
 Сам по себе объект не определяет свои свойства и поведение, - в этом смысле его лучше рассматривать как контейнер для набора определяющих его признаков.</p>
 
